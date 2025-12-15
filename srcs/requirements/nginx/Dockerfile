@@ -1,4 +1,4 @@
-from debian:bookworm
+FROM debian:bookworm
 
 # Update system
 RUN apt update && apt upgrade -y
@@ -12,7 +12,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ngin
 RUN mkdir -p /var/run/nginx/
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 # Setup permisisons
-RUN chmod 755 /var/www/wordpress
-RUN chown -R www.data:www.data /var/www/wordpress
+#RUN chmod 755 /var/www/wordpress
+#RUN chown -R www.data:www.data /var/www/wordpress
 # Run nginx
 CMD [ "nginx", "-g", "daemon off;" ]

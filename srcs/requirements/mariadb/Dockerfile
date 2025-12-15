@@ -1,15 +1,14 @@
-from debian:bookworm
+FROM debian:bookworm
 
 # Update system
 RUN apt update && apt upgrade -y
 # Install MariaDB
-RUN apt-get install mariadb-server -y
+RUN apt-get install -y mariadb-server
 # Copy config
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 # Copy setup script
-COPY tools/create_db.sh /usr/local/bin/create_db.sh
-RUN chmod +x /usr/local/bin/create_db.sh
+RUN ss -ln | grep mysqld
+COPY tools/script.sh /usr/local/bin/script.sh
+RUN chmod +x /usr/local/bin/script.sh
 
-ENTRYPOINT ["/usr/local/bin/create_db.sh"]
-
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD ["/usr/local/bin/script.sh"]
