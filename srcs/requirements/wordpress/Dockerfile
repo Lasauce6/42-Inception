@@ -19,7 +19,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN php wp-cli.phar --info
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
-COPY conf/configure-wp.sh /usr/local/bin/configure-wp.sh
+COPY tools/configure-wp.sh /usr/local/bin/configure-wp.sh
 RUN chmod +x /usr/local/bin/configure-wp.sh
 
 ENTRYPOINT ["/usr/local/bin/configure-wp.sh"]
