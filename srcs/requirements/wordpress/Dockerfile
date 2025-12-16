@@ -5,9 +5,9 @@ RUN apt update && apt upgrade -y
 # Install dependecies
 RUN apt-get install -y wget \
  curl \
- php7.3\
- php-fpm\
- php-mysql\
+ php7.3 \
+ php-fpm \
+ php-mysql \
  mariadb-client
 # Download and install wordpress
 RUN wget https://wordpress.org/wordpress-6.9.tar.gz -P /var/www
@@ -24,5 +24,5 @@ RUN chmod +x /usr/local/bin/configure-wp.sh
 
 ENTRYPOINT ["/usr/local/bin/configure-wp.sh"]
 
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+CMD ["/usr/sbin/php-fpm", "-F"]
 

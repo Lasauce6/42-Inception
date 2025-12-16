@@ -27,7 +27,7 @@ services:
       - inception
     depends_on:
       - mariadb
-    restart: on-failure
+    restart: unless-stopped
     expose:
       - "9000"
 
@@ -44,7 +44,7 @@ services:
       - wordpress
     ports:
       - "443:443"
-    restart: on-failure
+    restart: unless-stopped
 
 volumes:
   wordpress:
@@ -52,14 +52,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/rbaticle/Documents/inception_data/wordpress
+      device: /home/rbaticle/data/wordpress
 
   mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/rbaticle/Documents/inception_data/mariadb
+      device: /home/rbaticle/data/mariadb
 
 networks:
   inception:
