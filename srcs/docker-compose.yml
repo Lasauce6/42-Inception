@@ -52,14 +52,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/rbaticle/data/wordpress
+      device: ~/data/wordpress
 
   mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/rbaticle/data/mariadb
+      device: ~/data/mariadb
 
 networks:
   inception:

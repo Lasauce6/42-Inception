@@ -2,17 +2,26 @@ FROM debian:bookworm
 
 # Update system
 RUN apt update && apt upgrade -y
-# Install nginx
-RUN apt install nginx -y
+
+# Install nginx and openssl
+RUN apt install nginx openssl -y
+
 # Setup TLS
 RUN mkdir -p /etc/nginx/ssl/
-RUN apt install openssl -y
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=login.42.fr/UID=rbaticle"
-# Change nginx config
+RUN openssl req -x509 -nodes -days 365 \
+	-out /etc/nginx/ssl/inception.crt \
+	-keyout /etc/nginx/ssl/inception.key \
+	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=rbaticle.42.fr/UID=rbaticle"
+
+# Create necessary directories
 RUN mkdir -p /var/run/nginx/
-COPY conf/default.conf /etc/nginx/conf.d/default.conf
-# Setup permisisons
-#RUN chmod 755 /var/www/wordpress
-#RUN chown -R www.data:www.data /var/www/wordpress
+
+# Copy nginx configuration
+COPY conf/default.conf /etc/nginx/sites-available/default
+
+# Remove default nginx config if exists
+RUN rm -f /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
 # Run nginx
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD ["nginx", "-g", "daemon off;"]
