@@ -49,6 +49,8 @@ By contrast, a docker volume is a folder created by the docker container on the 
 
 Here is how to use and compile this project:
 
+**Clone the repository ([*How ?*](https://docs.github.com/articles/cloning-a-repository))**
+
 **Install prerequisites (for Ubuntu [*Others OS*](https://docs.docker.com/compose/install/linux/#install-using-the-repository)):**
 
 ```sh
