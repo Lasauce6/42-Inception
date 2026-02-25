@@ -1,7 +1,6 @@
 # 42 - Inception
 
 *This project has been created as part of the 42 curriculum by rbaticle*
--
 
 ## Description
 
@@ -54,7 +53,8 @@ Here is how to use and compile this project:
 
 ```sh
 # Uninstall older versions
-sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
+sudo apt remove $(dpkg --get-selections docker.io docker-compose \
+docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
 
 # Add Docker's official GPG key:
 sudo apt update
@@ -86,7 +86,7 @@ docker compose version
 ```sh
 cp srcs/.env.example srcs/.env
 ```
-*You can modify the .env file with your needs (use 'nano srcs/.env' or any text editor of your choice)*
+*You can modify the .env file with your needs (use ```nano srcs/.env``` or any text editor of your choice)*
 
 **Run the project:**
 
