@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Wait for MariaDB
+SQL_PASSWORD=$(cat /run/secrets/db_password)
+echo "$(cat /run/secrets/db_password)"
 until mysqladmin ping -h mariadb -u"$SQL_USER" -p"$SQL_PASSWORD" --silent; do
 	echo "Waiting for MariaDB..."
 	sleep 2
@@ -20,6 +22,7 @@ fi
 # Install wp if not installed
 if ! wp core is-installed --allow-root --path=/var/www/wordpress 2>/dev/null; then
 	echo "Installing wordpress..."
+	WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 	wp core install --allow-root \
 		--url=$WP_URL \
 		--title=$WP_TITLE \
@@ -31,6 +34,7 @@ if ! wp core is-installed --allow-root --path=/var/www/wordpress 2>/dev/null; th
 
 	# Add 2nd user
 	echo "Adding other user..."
+	WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 	wp user create --allow-root \
 		$WP_USER $WP_USER_EMAIL \
 		--user_pass=$WP_USER_PASSWORD \

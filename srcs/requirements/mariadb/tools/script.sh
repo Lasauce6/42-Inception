@@ -22,6 +22,11 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
 	echo "Création de la base de données et de l'utilisateur..."
 
+	SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+	SQL_PASSWORD=$(cat /run/secrets/db_password)
+	echo "$(cat /run/secrets/db_root_password)"
+	echo "$(cat /run/secrets/db_password)"
+
 	# Init database and user
 	mysql -u root <<EOF
 CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;
