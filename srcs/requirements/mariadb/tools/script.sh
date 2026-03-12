@@ -5,7 +5,7 @@ set -e
 sed -i 's/bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Verify if MariaDB is already initialised
-if [ ! -d "/var/lib/mysql/mysql" ]; then
+if [ ! -d "/var/lib/mysql/done" ]; then
 	echo "Première initialisation de MariaDB..."
 
 	# Install the database
@@ -24,8 +24,6 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
 	SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 	SQL_PASSWORD=$(cat /run/secrets/db_password)
-	echo "$(cat /run/secrets/db_root_password)"
-	echo "$(cat /run/secrets/db_password)"
 
 	# Init database and user
 	mysql -u root <<EOF
@@ -40,6 +38,8 @@ EOF
 
 	# Stop background mysqld_safe
 	mysqladmin -u root -p"${SQL_ROOT_PASSWORD}" shutdown
+
+	touch /var/lib/mysql/done
 
 	echo "Initialisation terminée."
 fi

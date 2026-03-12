@@ -4,45 +4,49 @@
 
 ## Description
 
-Inception is a project to learn how to use Docker, create Dockerfiles, use docker network and much more...
-The goal of the project is to create three diferents dockers containers:
- - One for the mariadb database
- - One for the nginx server
- - The last one for the wordpress site with PHP
+Inception is a project to learn how to use **Docker**, create **Dockerfiles**, use **docker network** and much more...
+The goal of the project is to create three diferent Docker containers:
+ - One for the **MariaDB** database
+ - One for the **NGINX** server
+ - The last one for the **WordPress** site with PHP
 
-Each containers must communicate with specific ports via the docker network, only the nginx container must be accesible by https (port 443)
+Each containers must communicate with specific ports via the docker network, only the **NGINX** container must be accessible by **HTTPS** (port 443)
 
 ### Virtual Machines vs Docker
 
-Like Virtual Machines, Docker allow to create a separate specific environement to run programs on an other os than the host machine.
-The main difference is that a Virtual Machine will virtualize an entire machine with the CPU, memory, network interface... and docker will only let you choose the bare minimum and customize as you want the process installed and used
+Like **Virtual Machines, Docker** allow to create a separate specific environment to run programs
+However, while a VM virtualizes an entire machine including its own **kernel**, Docker containers **share the host's kernel** and only virtualize the user space. This makes containers much lighter and faster than VMs
 
-Docker is mainly used to run an app or a specific service using less resources than a VM in a docker container, the resources are used on demand by the container unlike the VM that allocates, memory and CPU and releases it only after the VM is closed
+Docker is mainly used to run an app or a specific service using **fewer resources** than a VM, as it does not require a full guest OS
 
-### Secrets vs Environement Variables
+### Secrets vs Environment Variables
 
-Docker secrets are sensitive data such as passwords, ssh keys or other sensitive data wich is encrypted in the Dockerfile.
-Theses secrets can only be used by the docker containers who have access to it
-It allows to transfert and share Dockerfiles without exposing raw data to public and risk a security issue
+**Docker secrets** are sensitive data such as passwords or SSH keys
+They are **mounted into the container** during the build or runtime without being stored in the image layers or environment variables
+This ensures sensitive data is not exposed in the final image or in process list
+These secrets can only be used by the docker containers who have access to it
 
-Environement variables on the other hand are plain text stored typically on a .env file to get paths or other data that can be publicly available
-As the .env file is storing data in plain text, the Environement variables should not be sensitive data
-Environement variables are also use in Linux to store for example the username ($USER), or the path of executables ($PATH)
+**Environment variables** on the other hand are plain text stored typically on a **.env** file to get paths or other data that can be publicly available
+As the .env file is storing data in plain text, the Environment variables should not be sensitive data
+Environment variables are also used in Linux to store for example the username (```$USER```), or the path of executables (```$PATH```)
 
 ### Docker network vs Host network
 
-Docker network is a separated network from the Host network
-By default when starting a docker container, a bridge network is created to link the host network with the docker network
-This bridge can be disabled in the Dockerfile or docker-compose file and other networks can be created to link containers with each others
-In thoses networks ports can be openned to communicate with dockers containers or to the host network via the bridge network
+By default, Docker containers run in a **bridge network**, which is a separate network from the **Host network**
+This **isolates the containers' traffic**
+To make a container accessible, port must be explicitly mapped (for example ```-p 443:443```)
 
-The host network is completly separated from docker network allowing to isolate the trafic and protect the containers from security breachs
+In contrast, the **Host network** mode removes network isolation
+The container **shares the host's network stack** directly, meaning it has full access to the host's interfaces
+While thos offers better performance, it provides **less isolation and security** compared to the bridge network
+For this project, we use a custom bridge network to ensure containers communicate securely
 
 ### Docker volumes vs Bind mounts
 
-Bind mounts are used in docker containers to use a folder wich is attached to the container
-All the files are now accesibles on the docker container
-By contrast, a docker volume is a folder created by the docker container on the host machine to store and manage data from the docker container
+**Bind mounts** link a specific path on the host machine to a path inside the container, allowing direct access to host files
+
+**Docker volumes**, however, are **managed entirely by Docker** and are stored in a specific area on the host filesystem (```/var/lib/docker/volumes```)
+Volumes are the preferred way to persist data generated by containers because they are **portable** and independent of the host's directory structure
 
 
 ## Instructions
@@ -130,5 +134,5 @@ Links and references:
 - [Bind Mounts - Docker Docs](https://docs.docker.com/engine/storage/bind-mounts/)
 
 Use of AI in this project:
-- Used to refractor the readmes and to generate cleans commits messages
+- Used to refactor the READMEs and to generate cleans commits messages
 - Used to explain concepts about Docker

@@ -6,7 +6,7 @@
 #    By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/27 14:40:16 by rbaticle          #+#    #+#              #
-#    Updated: 2026/02/27 16:16:55 by rbaticle         ###   ########.fr        #
+#    Updated: 2026/03/12 13:19:48 by rbaticle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 DC = docker compose
@@ -59,6 +59,5 @@ clean:
 fclean: clean
 	$(RM) $(DATA_FOLDER)
 
-re: fclean $(DATA)
-	$(DC) -f $(DC_FILE) build
-	$(DC) -f $(DC_FILE) up -d
+re: fclean
+	@make up --no-print-directory
