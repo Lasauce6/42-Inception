@@ -1,11 +1,8 @@
 #!/bin/sh
 set -e
 
-# Modifier le bind-address pour accepter les connexions externes
-sed -i 's/bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
-
 # Verify if MariaDB is already initialised
-if [ ! -d "/var/lib/mysql/done" ]; then
+if ! [ -f "/var/lib/mysql/done" ]; then
 	echo "Première initialisation de MariaDB..."
 
 	# Install the database
@@ -15,7 +12,7 @@ if [ ! -d "/var/lib/mysql/done" ]; then
 	mysqld_safe &
 
 	# Wait for MariaDB to be ready
-	until mysqladmin ping --silent; do
+	until mariadb-admin ping --silent; do
 		echo "En attente de MariaDB..."
 		sleep 2
 	done
@@ -26,7 +23,7 @@ if [ ! -d "/var/lib/mysql/done" ]; then
 	SQL_PASSWORD=$(cat /run/secrets/db_password)
 
 	# Init database and user
-	mysql -u root <<EOF
+	mariadb -u root <<EOF
 CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;
 CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO '${SQL_USER}'@'%';
@@ -36,8 +33,8 @@ EOF
 
 	echo "Base de données et utilisateur créés avec succès."
 
-	# Stop background mysqld_safe
-	mysqladmin -u root -p"${SQL_ROOT_PASSWORD}" shutdown
+	# Stop background mariadb_safe
+	mariadb-admin -u root -p"${SQL_ROOT_PASSWORD}" shutdown
 
 	touch /var/lib/mysql/done
 
@@ -45,4 +42,4 @@ EOF
 fi
 
 # Start MariaDB in foreground (PID 1)
-exec mysqld
+exec mariadbd

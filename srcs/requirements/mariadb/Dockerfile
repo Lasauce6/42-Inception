@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN apt update && apt upgrade -y
 
 # Install MariaDB
-RUN apt install -y mariadb-server mariadb-client
+RUN apt install -y mariadb-server mariadb-client galera-4
 
 # Copy config
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
