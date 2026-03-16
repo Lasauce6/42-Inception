@@ -9,7 +9,7 @@ if ! [ -f "/var/lib/mysql/done" ]; then
 	mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
 	# Start MariaDB in background
-	mysqld_safe &
+	mysqld_safe --port 0 &
 
 	# Wait for MariaDB to be ready
 	until mariadb-admin ping --silent; do

@@ -92,7 +92,18 @@ docker compose version
 ```sh
 cp srcs/.env.example srcs/.env
 ```
-*You can modify the .env file with your needs (use ```nano srcs/.env``` or any text editor of your choice)*
+> *You can modify the .env file with your needs (use `nano srcs/.env` or any text editor of your choice)*
+
+**Create the secrets files:**
+
+```sh
+mkdir secrets
+echo "DB_PASSWORD" > secrets/db_password.txt
+echo "DB_ROOT_PASSWORD" > secrets/db_root_password.txt
+echo "WP_ADMIN_PASSWORD" > secrets/wp_admin_password.txt
+echo "WP_USER_PASSWORD" > secrets/wp_user_password.txt
+```
+> ***Note**: Replace the placeholder string with your actual passwords*
 
 **Run the project:**
 
@@ -121,6 +132,10 @@ make fclean
 # Fresh start
 make re
 ```
+
+See also :
+- [USER_DOC.md](USER_DOC.md)
+- [DEV_DOC.md](DEV_DOC.md)
 
 ## Resources
 
