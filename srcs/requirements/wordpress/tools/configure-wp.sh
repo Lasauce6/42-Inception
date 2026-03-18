@@ -38,7 +38,20 @@ if ! wp core is-installed --allow-root --path=/var/www/wordpress 2>/dev/null; th
 		$WP_USER $WP_USER_EMAIL \
 		--user_pass=$WP_USER_PASSWORD \
 		--path=/var/www/wordpress
+
+	# Setup wp theme
+	wp theme install --path=/var/www/wordpress variations --activate --allow-root
+
+	# Setup redis
+	wp config set WP_REDIS_HOST redis --path=/var/www/wordpress --allow-root
+	wp config set WP_REDIS_PORT 6379 --path=/var/www/wordpress --allow-root
+	wp config set WP_CACHE true --path=/var/www/wordpress --allow-root
+	wp plugin install --path=/var/www/wordpress redis-cache --activate --allow-root
+
+	# Update plugins
+	wp plugin update --path=/var/www/wordpress --all --allow-root
 fi
 
+wp redis enable --path=/var/www/wordpress --allow-root
 # Start php-fpm
 exec "$@"
