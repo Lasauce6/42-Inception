@@ -16,6 +16,7 @@ RUN cd /var/www && tar -xzf wordpress-6.9.tar.gz && rm wordpress-6.9.tar.gz
 
 # Set permissions
 RUN chmod -R 755 /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress
 
 # Install wordpress-cli to configure wp
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
