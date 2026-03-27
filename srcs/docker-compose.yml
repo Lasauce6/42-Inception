@@ -72,6 +72,24 @@ services:
     expose :
       - "6379"
 
+  ftp:
+    container_name: ftp
+    image: ftp:42
+    build:
+      context: requirements/bonus/ftp
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    ports:
+      - "21:21"
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+
 volumes:
   wordpress:
     driver: local
