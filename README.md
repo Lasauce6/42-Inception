@@ -10,6 +10,13 @@ The goal of the project is to create three diferent Docker containers:
  - One for the **NGINX** server
  - The last one for the **WordPress** site with PHP
 
+Bonuses containers:
+- **Redis**: A cache server to have a fast WordPress site
+- **FTP**: A FTP server to access the WordPress site files
+- **website**: A simple html memory game website
+- **Adminer**: A database management service to manage the MariaDB database
+- **Uptime Kuma**: A simple monitoring tool to monitor the diferent services
+
 Each containers must communicate with specific ports via the docker network, only the **NGINX** container must be accessible by **HTTPS** (port 443)
 
 ### Virtual Machines vs Docker
@@ -102,6 +109,7 @@ echo "DB_PASSWORD" > secrets/db_password.txt
 echo "DB_ROOT_PASSWORD" > secrets/db_root_password.txt
 echo "WP_ADMIN_PASSWORD" > secrets/wp_admin_password.txt
 echo "WP_USER_PASSWORD" > secrets/wp_user_password.txt
+echo "FTP_PASSWORD" > secrets/ftp_password.txt
 ```
 > ***Note**: Replace the placeholder string with your actual passwords*
 
@@ -147,6 +155,11 @@ Links and references:
 - [Networking overview - Docker Docs](https://docs.docker.com/engine/network/)
 - [Volumes - Docker Docs](https://docs.docker.com/engine/storage/volumes/)
 - [Bind Mounts - Docker Docs](https://docs.docker.com/engine/storage/bind-mounts/)
+- [vsftpd - Wiki Ubuntu](https://doc.ubuntu-fr.org/vsftpd)
+- [HTTP server - Python Doc](https://docs.python.org/fr/dev/library/http.server.html)
+- [Adminer - GitHub](https://github.com/vrana/adminer)
+- [Uptime Kuma - GitHub](https://github.com/louislam/uptime-kuma)
+
 
 Use of AI in this project:
 - Used to refactor the READMEs and to generate cleans commits messages

@@ -60,6 +60,7 @@ The project requires two types of configuration: environement variables and secr
     echo "YOUR_DB_ROOT_PASSWORD" > secrets/db_root_password.txt
     echo "YOUR_WP_ADMIN_PASSWORD" > secrets/wp_admin_password.txt
     echo "YOUR_WP_USER_PASSWORD" > secrets/wp_user_password.txt
+    echo "YOUR_FTP_PASSWORD" > secrets/ft_password.txt
     ```
     > **Note**: Replace the placeholder string with your actual passwords
 

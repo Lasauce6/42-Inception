@@ -10,7 +10,8 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     networks:
-      - inception
+      inception:
+        ipv4_address: '172.18.0.2'
     restart: unless-stopped
     expose:
       - "3306"
@@ -29,7 +30,8 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
     networks:
-      - inception
+      inception:
+        ipv4_address: '172.18.0.3'
     depends_on:
       - mariadb
     restart: unless-stopped
@@ -49,7 +51,8 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
     networks:
-      - inception
+      inception:
+        ipv4_address: '172.18.0.4'
     depends_on:
       - wordpress
     ports:
@@ -65,7 +68,8 @@ services:
     env_file:
       - .env
     networks:
-      - inception
+      inception:
+        ipv4_address: '172.18.0.5'
     restart: unless-stopped
     depends_on:
       - wordpress
@@ -83,12 +87,62 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
     networks:
-      - inception
+      inception:
+        ipv4_address: '172.18.0.6'
     ports:
+      - "20:20"
       - "21:21"
+      - "40000-40005:40000-40005"
     restart: unless-stopped
     depends_on:
       - wordpress
+    secrets:
+      - ftp_password
+
+  website:
+    container_name: website
+    image: website:42
+    build:
+      context: requirements/bonus/website
+      dockerfile: Dockerfile
+    networks:
+      inception:
+        ipv4_address: '172.18.0.7'
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  adminer:
+    container_name: adminer
+    image: adminer:42
+    build:
+      context: requirements/bonus/adminer
+      dockerfile: Dockerfile
+    networks:
+      inception:
+        ipv4_address: '172.18.0.8'
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: uptime-kuma:42
+    build:
+      context: requirements/bonus/uptime-kuma
+      dockerfile: Dockerfile
+    networks:
+      inception:
+        ipv4_address: '172.18.0.9'
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+      - website
+      - adminer
 
 volumes:
   wordpress:
@@ -108,6 +162,9 @@ volumes:
 networks:
   inception:
     driver: bridge
+    ipam:
+      config:
+        - subnet: '172.18.0.0/24'
 
 secrets:
   db_password:
@@ -118,3 +175,5 @@ secrets:
     file: ../secrets/wp_admin_password.txt
   wp_user_password:
     file: ../secrets/wp_user_password.txt
+  ftp_password:
+    file: ../secrets/ftp_password.txt

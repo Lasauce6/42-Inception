@@ -9,6 +9,13 @@ This project deploys a fully functional WordPress website with the following ser
 - **MariaDB**: A relational database to store the website data
 - **NGINX**: A web server that serves the site over HTTPS (SSL/TLS)
 
+Bonuses containers:
+- **Redis**: A cache server to have a fast WordPress site
+- **FTP**: A FTP server to access the WordPress site files
+- **website**: A simple html memory game website
+- **Adminer**: A database management service to manage the MariaDB database
+- **Uptime Kuma**: A simple monitoring tool to monitor the diferent services
+
 ## Starting and Stoping the project
 
 All interactions are managed via the Makefile
@@ -55,6 +62,8 @@ Credentials are stored securely using Docker Secrets
     - ```secrets/db_admin_password.txt```: Password for the database root user
     - ```secrets/wp_admin_password.txt```: Password for the WordPress admin user
     - ```secrets/wp_user_password.txt```: Password for the WordPress standard user
+    - ```secrets/ftp_password.txt```: Password for the FTP client
+
 
 To change a password:
 
@@ -69,10 +78,15 @@ To verify that all containers are running correctly:
 make ps
 ```
 
-You should see three containers running:
+You should see eight containers running:
 - ```mariadb```
 - ```wordpress```
 - ```nginx```
+- ```redis```
+- ```ftp```
+- ```website```
+- ```adminer```
+- ```uptime-kuma```
 
 If a container has a status of ```Exited```, check the logs using ```docker logs <container_name>```
 

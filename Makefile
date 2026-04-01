@@ -6,7 +6,7 @@
 #    By: rbaticle <rbaticle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/27 14:40:16 by rbaticle          #+#    #+#              #
-#    Updated: 2026/03/13 13:25:18 by rbaticle         ###   ########.fr        #
+#    Updated: 2026/04/01 15:01:45 by rbaticle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 DC = docker compose
@@ -30,11 +30,8 @@ up: build
 debug: build
 	$(DC) -f $(DC_FILE) up
 
-$(DATA_FOLDER):
-	mkdir $(DATA_FOLDER)
-
 $(DATA):
-	mkdir $(DATA)
+	mkdir -p $(DATA)
 
 $(SECRETS):
 	chmod +x srcs/requirements/tools/init_secrets.sh
@@ -44,7 +41,7 @@ $(ENV):
 	chmod +x srcs/requirements/tools/init_env.sh
 	sh srcs/requirements/tools/init_env.sh
 
-build: $(DATA_FOLDER) $(DATA) $(SECRETS) $(ENV)
+build: $(DATA) $(SECRETS) $(ENV)
 	$(DC) -f $(DC_FILE) build
 
 stop:

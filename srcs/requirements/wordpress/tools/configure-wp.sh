@@ -1,5 +1,16 @@
 #!/bin/sh
 
+if ! id -u $FTP_USER >/dev/null 2>&1; then
+	echo "Création de l'utilisateur FTP : $FTP_USER"
+	adduser --disabled-password --gecos "" $FTP_USER
+fi
+
+adduser $FTP_USER www-data
+
+chown -R $FTP_USER:www-data /var/www/wordpress
+chmod -R 775 /var/www/wordpress
+chmod g+s /var/www/wordpress
+
 # Wait for MariaDB
 SQL_PASSWORD=$(cat /run/secrets/db_password)
 until mysqladmin ping -h mariadb -u"$SQL_USER" -p"$SQL_PASSWORD" --silent --port 3306; do
