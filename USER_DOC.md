@@ -12,7 +12,7 @@ This project deploys a fully functional WordPress website with the following ser
 Bonuses containers:
 - **Redis**: A cache server to have a fast WordPress site
 - **FTP**: A FTP server to access the WordPress site files
-- **website**: A simple html memory game website
+- **website**: A portfolio website built with Nuxt
 - **Adminer**: A database management service to manage the MariaDB database
 - **Uptime Kuma**: A simple monitoring tool to monitor the diferent services
 
@@ -45,10 +45,16 @@ make re
 
 Once the project is running, you can access the services via your web browser
 
-- **Website**: Access the WordPress site via HTTPS on port 443
+- **WordPress Website**: Access the WordPress site via HTTPS on port 443
     - URL: ```https://<DOMAIN_NAME_in_.env>```
-- **Administration Pannel**: Access the WordPress admin dashboard
+- **Administration Panel**: Access the WordPress admin dashboard
     - URL: ```https://<DOMAIN_NAME_in_.env>/wp-admin```
+- **Portfolio Website**: Access the portfolio website
+    - URL: ```https://<DOMAIN_NAME_in_.env>:8080```
+- **Adminer**: Access the database management service
+    - URL: ```https://<DOMAIN_NAME_in_.env>:8000```
+- **Uptime Kuma**: Access the monitoring tool
+    - URL: ```https://<DOMAIN_NAME_in_.env>:3001```
 
 > **Note**: Since the project uses a self-signed certificate by default, your browser might warn you about the connection security. You can proceed by accepting the risk
 

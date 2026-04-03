@@ -12,8 +12,11 @@ else
 	echo "Database detected."
 fi
 
-. "/root/.nvm/nvm.sh" && nvm use 24
 npm run setup
+
+echo "Wait 10 secs before starting to wait for other containers ..."
+sleep 10
+echo "Done."
 
 echo "Starting Uptime Kuma ..."
 exec node server/server.js

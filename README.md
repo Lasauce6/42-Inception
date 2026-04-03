@@ -13,7 +13,7 @@ The goal of the project is to create three diferent Docker containers:
 Bonuses containers:
 - **Redis**: A cache server to have a fast WordPress site
 - **FTP**: A FTP server to access the WordPress site files
-- **website**: A simple html memory game website
+- **website**: A portfolio website built with Nuxt
 - **Adminer**: A database management service to manage the MariaDB database
 - **Uptime Kuma**: A simple monitoring tool to monitor the diferent services
 
@@ -156,7 +156,7 @@ Links and references:
 - [Volumes - Docker Docs](https://docs.docker.com/engine/storage/volumes/)
 - [Bind Mounts - Docker Docs](https://docs.docker.com/engine/storage/bind-mounts/)
 - [vsftpd - Wiki Ubuntu](https://doc.ubuntu-fr.org/vsftpd)
-- [HTTP server - Python Doc](https://docs.python.org/fr/dev/library/http.server.html)
+- [Personal portfolio](https://github.com/Lasauce6/raphaelbaticle.fr)
 - [Adminer - GitHub](https://github.com/vrana/adminer)
 - [Uptime Kuma - GitHub](https://github.com/louislam/uptime-kuma)
 
